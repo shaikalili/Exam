@@ -9,13 +9,17 @@ public class Main {
         Scanner scanner=new Scanner(System.in);
         int [][] mainMat=new int[40][40];
         int [][] subMat=new int[10][10];
-        /*int[][] array={
-                {1,2,0},{4,5,6},{7,8,9}
+        int[][] array={
+                {1,2,0,8},
+                {4,5,6,2},
+                {7,8,9,2},
+                {2,3,5,6}
         };
-        int [][]array2={
-                {1,0,3},{4,5,6}
-        };*/
-      for(int i=0;i<mainMat.length;i++){
+        int [][]array2= {
+                {4,5,6},
+                {7,8,9}
+        };
+        /*for(int i=0;i<mainMat.length;i++){
           for(int j=0;j<mainMat.length;j++){
               mainMat[i][j]=j+1;
           }
@@ -25,10 +29,10 @@ public class Main {
             for(int j=0;j<subMat.length;j++){
                subMat[i][j]=j+1;
             }
-        }
+        }*/
         System.out.println(Arrays.deepToString(mainMat));
         System.out.println(Arrays.deepToString(subMat));
-        if(isArraysMatch(mainMat,subMat))
+        if(isArraysMatch(array,array2))
         System.out.println("we have a match");
         else
             System.out.println("we dont have a match");
@@ -36,13 +40,31 @@ public class Main {
     }
 
     public static boolean isArraysMatch(int [][] big,int [][] small) {
-       for (int i=0;i< small.length;i++){
-           for (int j=0;j< small.length;j++){
-               if(small[i][j]!=big[i][j])
-                   return false;
-           }
-       }
+        int startRaw=0;
+        int startCol=0;
+        boolean find=false;
 
-        return true;
+       while (!find) {
+           for (int i = 0; i < big.length; i++) {
+               for (int j = 0; j < big.length; j++) {
+                   if (small[0][0] == big[i][j]) {
+                       startRaw = i;
+                       startCol = j;
+                   }
+               }
+           }
+           find=true;
+           for (int i=startRaw,m=0; i< small.length; i++,m++) {
+               for (int j=startCol,k=0; j < small.length; j++,k++) {
+                   if (small[m][k] != big[i][j]) {
+                       find=false;
+                       break;
+                   }
+               }
+           }
+           if (find)
+               return true;
+       }
+       return false;
     }
 }
