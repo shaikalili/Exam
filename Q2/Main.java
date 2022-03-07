@@ -40,31 +40,34 @@ public class Main {
     }
 
     public static boolean isArraysMatch(int [][] big,int [][] small) {
-        int startRaw=0;
-        int startCol=0;
-        boolean find=false;
+        int bigRaw = big.length;
+        int bigCol = big[0].length;
+        int smallRaw = small.length; 
+        int smallCol = small[0].length;
 
-       while (!find) {
-           for (int i = 0; i < big.length; i++) {
-               for (int j = 0; j < big.length; j++) {
-                   if (small[0][0] == big[i][j]) {
-                       startRaw = i;
-                       startCol = j;
-                   }
-               }
-           }
-           find=true;
-           for (int i=startRaw,m=0; i< small.length; i++,m++) {
-               for (int j=startCol,k=0; j < small.length; j++,k++) {
-                   if (small[m][k] != big[i][j]) {
-                       find=false;
-                       break;
-                   }
-               }
-           }
-           if (find)
-               return true;
-       }
-       return false;
+        int flag = 0;
+
+        for(int i=0; i<=(bigRaw - smallRaw); i++)
+        {
+            for(int j=0; j<=(bigCol- smallCol); j++)
+            {
+                flag=0;
+                for(int p=0; p< smallRaw; p++)
+                {
+                    for(int q = 0; q< smallCol; q++)
+                    {
+                        if(big[i+p][j+q] != small[p][q])
+                        {
+                            flag=1;break;
+                        }
+                    }
+                }
+                if(flag==0)
+                    break;
+            }
+            if(flag==0)
+                break;
+        }
+      return flag==0?true:false;
     }
 }
